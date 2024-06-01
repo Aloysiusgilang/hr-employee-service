@@ -1,4 +1,4 @@
-import { getUserByUserId } from "../services/user";
+import { getUserByUserId } from "../utils/authClient";
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/jwt";
 
@@ -24,7 +24,8 @@ export const authenticate = async (
 
     const { userId } = verifyToken(token);
 
-    const user = await getUserByUserId(userId);
+    const user = await getUserByUserId(userId, token);
+    console.log("user", user);
 
     // Check if the user exists
     if (!user) {
@@ -37,7 +38,7 @@ export const authenticate = async (
     // If the token is valid, proceed to the next middleware or route handler
     next();
   } catch (error) {
-    console.error("Error authenticating token:", error);
+    // console.error("Error authenticating token:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

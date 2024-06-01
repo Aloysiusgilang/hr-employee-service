@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
-  handleGetUserByUserId,
-  handleCreateUser,
-  handleLoginUser,
-} from "./controllers/user";
+  handleCreateEmployee,
+  handleDeleteEmployee,
+  handleGetAllEmployees,
+  handleGetEmployeeById,
+  handleUpdateEmployee,
+} from "./controllers/employee";
 import { authenticate } from "./middlewares/auth";
 
 function createRouter(callback: (router: Router) => void) {
@@ -13,7 +15,9 @@ function createRouter(callback: (router: Router) => void) {
 }
 
 export default createRouter((router: Router) => {
-  router.get("/users/:id", authenticate, handleGetUserByUserId);
-  router.post("/register", handleCreateUser);
-  router.post("/login", handleLoginUser);
+  router.get("/", handleGetAllEmployees);
+  router.get("/employee/:id", authenticate, handleGetEmployeeById);
+  router.post("/employee", authenticate, handleCreateEmployee);
+  router.put("/employee/:id", authenticate, handleUpdateEmployee);
+  router.delete("/employee/:id", authenticate, handleDeleteEmployee);
 });
