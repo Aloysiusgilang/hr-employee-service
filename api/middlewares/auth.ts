@@ -24,7 +24,7 @@ export const authenticate = async (
 
     const { userId } = verifyToken(token);
 
-    const [user] = await getUserByUserId(userId, token);
+    const user = await getUserByUserId(userId, token);
 
     // Check if the user exists
     if (!user) {
