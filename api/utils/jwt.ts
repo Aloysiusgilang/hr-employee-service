@@ -4,7 +4,7 @@ const JWT_CONFIG: JWT.SignOptions = {
   expiresIn: "12h",
 };
 
-const secret = process.env.JWT_SECRET;
+const secret = process.env.JWT_SECRET || "secret";
 
 export default function generateToken(userId: string): string {
   return JWT.sign({ userId }, secret, JWT_CONFIG);
