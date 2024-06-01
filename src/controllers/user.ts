@@ -27,11 +27,11 @@ export const handleLoginUser = async (req: Request, res: Response) => {
   }
 
   const token = generateToken(user.id);
-  res.status(200).json({ token });
+  res.status(200).json({ token, user });
 };
 
 export const handleCreateUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   const user = await getUserByEmail(email);
   if (user) {
@@ -44,11 +44,10 @@ export const handleCreateUser = async (req: Request, res: Response) => {
     .values({
       email,
       password: hashedPassword,
-      role: "user",
+      role,
     })
-    .returning({ insertedId: users.id });
+    .returning();
 
-  console.log("newUser", newUser);
-  const token = generateToken(newUser.insertedId);
-  res.status(201).json({ token, user });
+  const token = generateToken(newUser.id);
+  res.status(201).json({ token, user: newUser });
 };
