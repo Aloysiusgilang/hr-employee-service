@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   getEmployeeByEmployeeId,
+  getEmployeeByUserId,
   createEmployee,
   updateEmployee,
   deleteEmployee,
@@ -11,6 +12,19 @@ export const handleGetEmployeeById = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const users = await getEmployeeByEmployeeId(userId);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const handleGetEmployeeByUserId = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const userId = req.params.id;
+    const users = await getEmployeeByUserId(userId);
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error });

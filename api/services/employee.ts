@@ -12,6 +12,16 @@ export const getEmployeeByEmployeeId = async (employeeId: string) => {
   return employee;
 };
 
+export const getEmployeeByUserId = async (userId: string) => {
+  const [employee] = await db
+    .select()
+    .from(employees)
+    .where(eq(employees.user_id, userId))
+    .limit(1);
+
+  return employee;
+};
+
 export const getAllEmployees = async () => {
   const employee = await db.select().from(employees);
 
